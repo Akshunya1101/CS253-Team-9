@@ -75,3 +75,11 @@ def sell(request):
 def rent(request):
 	context = {}
 	return render(request, 'accounts/rent.html', context)
+
+@login_required(login_url='login')
+def productview(request):
+	return HttpResponse("We are at Product View page.")
+
+@login_required(login_url='login')
+def checkout(request):
+	return HttpResponse("We are at Checkout page.")
