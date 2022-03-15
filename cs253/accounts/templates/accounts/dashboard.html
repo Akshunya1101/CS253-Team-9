@@ -4,9 +4,9 @@
 
 {%  include 'accounts/status.html' %}
 
-<span ><a  class="BUY" href="{% url 'buy' %}">Buy</a></span><br>
-<span ><a  class="SELL" href="{% url 'sell' %}">Sell</a></span><br>
-<span ><a  class="RENT" href="{% url 'rent' %}">Rent</a></span>
+<span ><a  class="BUY" href="{% url 'accounts:buy' %}">Buy</a></span><br>
+<span ><a  class="SELL" href="{% url 'accounts:sell' %}">Sell</a></span><br>
+<span ><a  class="RENT" href="{% url 'accounts:rent' %}">Rent</a></span>
 
 {% endblock %}
 
