@@ -13,7 +13,5 @@ urlpatterns = [
 	path('buy/',login_required(Sell_List.as_view()), name="buy"),
 	path('sell/',login_required(Sell_Create.as_view()), name="sell"),
 	path('details/<int:pk>',login_required(Sell_Details.as_view()), name="item_details"),
-	path('rent/', views.rent, name="rent"),
-	path('productview/', views.productview, name="ProductView"), # To view details of any available product
-	path('checkout/', views.checkout, name="CheckOut"),  
+	path('rent/', views.rent, name="rent"), 
 ]
