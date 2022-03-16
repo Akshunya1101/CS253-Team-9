@@ -1,0 +1,19 @@
+{%  extends 'accounts/main.html' %}
+
+{% block content %}
+
+{%  include 'accounts/status.html' %}
+
+<h1>BUY</h1>
+
+<ul>
+    {% for item in item_list %}
+        <li> <a href="/details/{{item.id}}"> {{item.name}}   ₹{{item.price}}</a>
+             <img src="{{item.photo.url}}">
+        </li>
+
+    {% endfor %}
+</ul>
+
+{% endblock %}
+

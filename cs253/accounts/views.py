@@ -2,20 +2,21 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.forms import inlineformset_factory
 from django.contrib.auth.forms import UserCreationForm
-
+from django.urls import reverse_lazy
+from django.views.generic import CreateView,ListView,DetailView
 from django.contrib.auth import authenticate, login, logout
 
 from django.contrib import messages
 
 from django.contrib.auth.decorators import login_required
-
+from django.utils.decorators import method_decorator
 # Create your views here.
-from .models import *
+from .models import Sell
 from .forms import CreateUserForm
 
 def registerPage(request):
 	if request.user.is_authenticated:
-		return redirect('home')
+		return redirect('accounts:home')
 	else:
 		form = CreateUserForm()
 		if request.method == 'POST':
@@ -25,7 +26,7 @@ def registerPage(request):
 				user = form.cleaned_data.get('username')
 				messages.success(request, 'Account was created for ' + user)
 
-				return redirect('login')
+				return redirect('accounts:login')
 			
 
 		context = {'form':form}
@@ -33,7 +34,7 @@ def registerPage(request):
 
 def loginPage(request):
 	if request.user.is_authenticated:
-		return redirect('home')
+		return redirect('accounts:home')
 	else:
 		if request.method == 'POST':
 			username = request.POST.get('username')
@@ -43,7 +44,7 @@ def loginPage(request):
 
 			if user is not None:
 				login(request, user)
-				return redirect('home')
+				return redirect('accounts:home')
 			else:
 				messages.info(request, 'Username OR password is incorrect')
 
@@ -52,33 +53,32 @@ def loginPage(request):
 
 def logoutUser(request):
 	logout(request)
-	return redirect('login')
+	return redirect('accounts:login')
 
 
-@login_required(login_url='login')
+@login_required(login_url='accounts:login')
 def home(request):
 	context = {}
 	return render(request, 'accounts/dashboard.html', context)
 
-@login_required(login_url='login')
+@login_required(login_url='accounts:login')
 def buy(request):
 	context = {}
 	return render(request, 'accounts/buy.html', context)
 
-@login_required(login_url='login')
-def sell(request):
-	context = {}
-	return render(request, 'accounts/sell.html', context)
-
-@login_required(login_url='login')
+@login_required(login_url='accounts:login')
 def rent(request):
 	context = {}
 	return render(request, 'accounts/rent.html', context)
 
-@login_required(login_url='login')
-def productview(request):
-	return HttpResponse("We are at Product View page.")
+class Sell_Create(CreateView):
+	model = Sell
+	fields = "__all__"
+	success_url = reverse_lazy('accounts:home')
 
-@login_required(login_url='login')
-def checkout(request):
-	return HttpResponse("We are at Checkout page.")
+class Sell_List(ListView):
+	model = Sell
+	context_object_name = 'item_list'
+
+class Sell_Details(DetailView):
+	model = Sell
