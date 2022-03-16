@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.forms import inlineformset_factory
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView,ListView,DetailView
 from django.contrib.auth import authenticate, login, logout
 
 from django.contrib import messages
@@ -75,4 +75,12 @@ class Sell_Create(CreateView):
 	model = Sell
 	fields = "__all__"
 	success_url = reverse_lazy('accounts:home')
+
+class Sell_List(ListView):
+	model = Sell
+	context_object_name = 'item_list'
+
+class Sell_Details(DetailView):
+	model = Sell
+	
 
