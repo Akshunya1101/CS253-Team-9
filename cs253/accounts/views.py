@@ -82,5 +82,3 @@ class Sell_List(ListView):
 
 class Sell_Details(DetailView):
 	model = Sell
-	
-

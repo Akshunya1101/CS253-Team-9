@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 app_name = 'accounts'
 
 urlpatterns = [
+    path('', views.home, name="home"),
 	path('register/', views.registerPage, name="register"),
 	path('login/', views.loginPage, name="login"),  
 	path('logout/', views.logoutUser, name="logout"),
@@ -13,5 +14,6 @@ urlpatterns = [
 	path('sell/',login_required(Sell_Create.as_view()), name="sell"),
 	path('details/<int:pk>',login_required(Sell_Details.as_view()), name="item_details"),
 	path('rent/', views.rent, name="rent"),
-    path('', views.home, name="home"),
+	path('productview/', views.productview, name="ProductView"), # To view details of any available product
+	path('checkout/', views.checkout, name="CheckOut"),  
 ]
