@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views.generic import CreateView,ListView,DetailView
 from django.contrib.auth import authenticate, login, logout
+import math
 
 from django.contrib import messages
 
@@ -58,8 +59,12 @@ def logoutUser(request):
 
 @login_required(login_url='accounts:login')
 def home(request):
-	context = {}
-	return render(request, 'accounts/dashboard.html', context)
+	products = Sell.objects.all()
+	print(products)
+	n = len(products)
+	nSlides = n//4
+	parameters = {"num_slides": nSlides, 'product': products, 'range': range(1,nSlides)}
+	return render(request, 'accounts/dashboard.html', parameters)
 
 @login_required(login_url='accounts:login')
 def buy(request):
@@ -82,3 +87,4 @@ class Sell_List(ListView):
 
 class Sell_Details(DetailView):
 	model = Sell
+
