@@ -6,7 +6,12 @@
 
 <span ><a  class="BUY" href="{% url 'accounts:buy' %}">Buy</a></span><br>
 <span ><a  class="SELL" href="{% url 'accounts:sell' %}">Sell</a></span><br>
-<span ><a  class="RENT" href="{% url 'accounts:rent' %}">Rent</a></span>
+<span ><a  class="RENT" href="{% url 'accounts:rent' %}">Rent</a></span><br>
+
+{% for i in product %}
+<img src="{{i.photo}}" alt="img"><br>
+<h3>{{i.name}}</h3><br>
+{% endfor %}
 
 {% endblock %}
 

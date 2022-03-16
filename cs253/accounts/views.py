@@ -62,8 +62,9 @@ def home(request):
 	products = Sell.objects.all()
 	print(products)
 	n = len(products)
+	print(n)
 	nSlides = n//4
-	parameters = {"num_slides": nSlides, 'product': products, 'range': range(1,nSlides)}
+	parameters = {"num_slides": nSlides, 'product': products, 'range': range(n)}
 	return render(request, 'accounts/dashboard.html', parameters)
 
 @login_required(login_url='accounts:login')
