@@ -16,6 +16,7 @@ from django.utils.decorators import method_decorator
 # Create your views here.
 from .models import Sell
 from .forms import CreateUserForm
+from math import ceil
 
 
 def registerPage(request):
