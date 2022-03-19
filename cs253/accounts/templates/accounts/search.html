@@ -17,11 +17,45 @@
                       <p class="card-text">{{item.description}}</p>
                     </div>
                     <div class="card-footer text-muted mx-auto" style="background-color: #E0FFFF;">
-                        <a href="#" class="btn btn-primary">Interested</a>
+                        <a href="#" class="btn btn-primary" onclick="joinRoom('{{item.name}}','{{item.id}}')">Interested</a>
                     </div>
                   </div>
     {% endfor %}
                 </div>
             </div>
+
+<script>
+  function getCookie(c_name) {
+    var c_arr = document.cookie.split(';');
+    var jwtToken
+    c_arr.forEach((val) => {
+      if (c_name == val.split('=')[0]) {
+        var token = val.split('=')[1];
+        jwtToken = token
+      }
+    })
+    return decodeURI(jwtToken);
+  }
+
+  function joinRoom(room, id) {
+    const body = {
+      room_name: 'room'+id
+    }
+    console.log(body)
+    fetch("http://127.0.0.1:8000/enterRoom/checkview", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken'),
+        'authority': 'bearer ' + getCookie('csrftoken')
+      },
+      body: JSON.stringify(body)
+    }
+    ).then((response) => {
+      // console.log(response.url)
+      window.location = response.url
+    })
+  }
+</script>
 {% endblock %}
 
