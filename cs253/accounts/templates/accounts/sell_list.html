@@ -1,68 +1,78 @@
-{%  extends 'accounts/main.html' %}
+{% extends 'accounts/main.html' %}
 {% block content %}
 
-{%  include 'accounts/status.html' %}
+{% include 'accounts/status.html' %}
 
 <h4 style="margin:20px">Buy Available Products here: </h4>
 
-    <div class="container">
-        <div class="row">
+<div class="container">
+  <div class="row">
     {% for item in item_list %}
-                <div class="card" style="width: 18rem; margin: 15px 30px; border: 5px solid black; background-color:#E0FFFF;">
-                    <img class="card-img-top" src="{{item.photo.url}}" alt="Card image cap"
-                    style="width: 100%; height: 20vw; object-fit: cover;">
-                    <div class="card-body">
-                      <h5 class="card-title">{{item.name}}</h5>
-                      <p class="card-text"> Price: &#8377; {{item.price}}</p>
-                      <p class="card-text">{{item.description}}</p>
-                    </div>
-                    <div class="card-footer text-muted mx-auto" style="background-color: #E0FFFF;">
-                        <button class="btn btn-primary" onclick="joinRoom('{{item.name}}','{{item.id}}')">Interested</button>
-                    </div>
-                  </div>
-    {% endfor %}
-    <div class="card" style="width: 18rem; margin: 15px 30px; border: 5px solid black;">
-        <div class="card-body">
-          <h1 class="card-title" style="color: green; font-size:45px;">You can also <b>SELL</b> on click of 1 button...</h1>
-        </div>
-        <div class="card-footer text-muted mx-auto" style="background-color: white;">
-            <a href="{% url 'accounts:sell' %}" class="btn btn-success">Sell Your Products</a>
-        </div>
+    <div class="card" style="width: 18rem; margin: 15px 30px; border: 5px solid black; background-color:#E0FFFF;">
+      <img class="card-img-top" src="{{item.photo.url}}" alt="Card image cap"
+        style="width: 100%; height: 20vw; object-fit: cover;">
+      <div class="card-body">
+        <h5 class="card-title">{{item.name}}</h5>
+        <p class="card-text"> Price: &#8377; {{item.price}}</p>
+        <p class="card-text">{{item.description}}</p>
       </div>
-                </div>
-            </div>
+      <div class="card-footer text-muted mx-auto" style="background-color: #E0FFFF;">
+        <button class="btn btn-primary" onclick="joinRoom('{{item.name}}','{{item.id}}')">Interested</button>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% comment %} <div class="card" style="width: 18rem; margin: 15px 30px; border: 5px solid black;">
+  <div class="card-body">
+    <h1 class="card-title" style="color: green; font-size:45px;">You can also <b>SELL</b> on click of 1 button...</h1>
+  </div>
+  <div class="card-footer text-muted mx-auto" style="background-color: white;">
+    <a href="{% url 'accounts:sell' %}" class="btn btn-success">Sell Your Products</a>
+  </div>
+</div> {% endcomment %}
+
+<div class="card border-success mb-3">
+  <div class="card text-center">
+    <div class="card-body" style="background-color:#E0FFFF;">
+      <h3 class="card-title">You can also Sell your product at single click !</h3>
+      <p class="card-text">Upload the details of your product by clicking below.</p>
+      <a href="{% url 'accounts:sell' %}" class="btn btn-success">Sell Your Product</a>
+    </div>
+  </div>
+</div>
+</div>
 <script>
   function getCookie(c_name) {
-        var c_arr = document.cookie.split(';');
-        var jwtToken
-        c_arr.forEach((val) => {
-            if (c_name == val.split('=')[0]) {
-                var token = val.split('=')[1];
-                jwtToken = token
-            }
-        })
-        return decodeURI(jwtToken);
-    }
+    var c_arr = document.cookie.split(';');
+    var jwtToken
+    c_arr.forEach((val) => {
+      if (c_name == val.split('=')[0]) {
+        var token = val.split('=')[1];
+        jwtToken = token
+      }
+    })
+    return decodeURI(jwtToken);
+  }
 
-  function joinRoom(room,id){
-    const body={
+  function joinRoom(room, id) {
+    const body = {
       room_name: room
     }
     console.log(body)
-    fetch("http://127.0.0.1:8000/enterRoom/checkview",{
+    fetch("http://127.0.0.1:8000/enterRoom/checkview", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRFToken':getCookie('csrftoken'),
-        'authority':'bearer '+getCookie('csrftoken')
+        'X-CSRFToken': getCookie('csrftoken'),
+        'authority': 'bearer ' + getCookie('csrftoken')
       },
       body: JSON.stringify(body)
     }
-    ).then((response)=>{
+    ).then((response) => {
       // console.log(response.url)
-      window.location=response.url
+      window.location = response.url
     })
   }
 </script>
 {% endblock %}
-

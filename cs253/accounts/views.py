@@ -118,7 +118,6 @@ def room(request, room):
 
 
 def checkview(request):
-    print(request.body)
     jsonResponse=json.loads(request.body)
     room = jsonResponse['room_name']
     username = str(request.user)
