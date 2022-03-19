@@ -1,26 +1,57 @@
 {%  extends 'accounts/main.html' %}
-{% block css %}
-        .col-md-3 {
-            display: inline-block;
-            margin-left: -4px;
-        }
 
 {% block content %}
 {% load static %}
+<div class="card" style="margin:15px; background-color:#E0FFFF;">
+  <div class="card-body">
+    <h5 class="card-title">BUY Different Products</h5>
+    <p class="card-text">You can directly have <b>CHAT</b> with the seller to purchase variety items at affordable prices on SINGLE click...</p>
+    <a href="{% url 'accounts:buy' %}" class="btn btn-success">View Products</a>
+  </div>
+</div>
+{% if products %}
+<h4 style="margin:20px">Items Uploaded by You: </h4>
+<hr>
+
+<div class="container">
+    <div class="row">
 {% for item in products %}
-<div class="card" style="width: 18rem; margin: 15px 30px; border: 5px solid black; background-color:#E0FFFF;">
-    <img class="card-img-top" src="{{item.photo.url}}" alt="Card image cap"
-    style="width: 100%; height: 20vw; object-fit: cover;">
-    <div class="card-body">
-      <h5 class="card-title">{{item.name}}</h5>
-      <p class="card-text"> Price: &#8377; {{item.price}}</p>
-      <p class="card-text">{{item.description}}</p>
-    </div>
-    <div class="card-footer text-muted mx-auto" style="background-color: #E0FFFF;">
-        <a href="#" class="btn btn-primary">Interested</a>
+            <div class="card" style="width: 15rem; margin: 15px 15px; border: 5px solid black; border-radius: 8px;background-color:#E0FFFF;">
+                <img class="card-img-top" src="{{item.photo.url}}" alt="Card image cap"
+                style="width: 100%; height: 15vw; object-fit: cover;">
+                <div class="card-body">
+                  <h5 class="card-title">{{item.name}}</h5>
+                  <p class="card-text"> Price: &#8377; {{item.price}} <br> {{item.description}}</p>
+                </div>
+                <div class="card-footer text-muted mx-auto" style="background-color: #E0FFFF;">
+                    <a href="#" class="btn btn-danger">Delete</a>
+                </div>
+              </div>
+{% endfor %}
+            </div>
+        </div>
+        <div class="card border-success mb-3">
+          <div class="card text-center">
+            <div class="card-body" style="background-color:#E0FFFF;" >
+              <h3 class="card-title">You can add more products by visiting the link below</h3>
+              <a href="{% url 'accounts:sell' %}" class="btn btn-success">Add Product</a>
+            </div>
+          </div>
+        </div>
+{% else %}
+<h4 style="margin:20px">Items Uploaded by You: </h4>
+<hr>
+<p>You have not uploaded any items for sell...</p>
+<div class="card border-success mb-3" style="margin:15px;">
+  <div class="card text-center">
+    <div class="card-body" style="background-color:#E0FFFF;" >
+      <h3 class="card-title">You can also Sell your product at single click !</h3>
+      <p class="card-text">Upload the details of your product by clicking below.</p>
+      <a href="{% url 'accounts:sell' %}" class="btn btn-success">Sell Your Product</a>
     </div>
   </div>
-{% endfor %}
+</div>
+{% endif %}
  {% endblock %}
 
 
