@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView
 from django.contrib.auth import authenticate, login, logout
 import math
+import json
 from django.contrib.auth.models import User
 from django.contrib import messages
 from accounts.models import Room, Message
@@ -117,7 +118,8 @@ def room(request, room):
 
 
 def checkview(request):
-    room = request.POST['room_name']
+    jsonResponse=json.loads(request.body)
+    room = jsonResponse['room_name']
     username = str(request.user)
 
     if Room.objects.filter(name=room).exists():
