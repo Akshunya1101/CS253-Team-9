@@ -12,7 +12,7 @@ class Sell(models.Model):
         return f"Item name is {self.name} and it costs Rs {self.price}."
 
 class Room(models.Model):
-    name = models.CharField(max_length=1000)
+    name = models.CharField(max_length=1000,unique=True)
 class Message(models.Model):
     value = models.CharField(max_length=1000000)
     date = models.DateTimeField(default=datetime.now, blank=True)
