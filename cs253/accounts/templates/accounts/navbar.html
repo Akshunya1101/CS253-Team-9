@@ -23,9 +23,17 @@
         </li>
 
       </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="margin: 0px 5px">
-        <button class="btn btn-outline-success" type="submit" style="margin: 0px 5px">Search</button>
+      {% comment %} <form class="d-flex" action='/search'>
+        <div class="input-group">
+          <input name='q' type="text" class="form-control" placeholder="Search" />
+          <button class="btn btn-outline-success" type="submit" id="button-addon2" style="margin: 0px 5px">Search</button>
+        </div> {% endcomment %}
+
+        <form class="d-flex" action='/search'>
+          <input name='search' class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="margin: 0px 5px">
+          <button class="btn btn-outline-success" type="submit" style="margin: 0px 5px">Search</button>
+        </form>
+        
       </form>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
