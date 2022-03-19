@@ -14,4 +14,9 @@ urlpatterns = [
 	path('sell/',login_required(Sell_Create.as_view()), name="sell"),
 	path('details/<int:pk>',login_required(Sell_Details.as_view()), name="item_details"),
 	path('rent/', views.rent, name="rent"), 
+	path('enterRoom/', views.enterRoom, name="enterRoom"), 
+	path('<str:room>/', views.room, name='room'),
+    path('enterRoom/checkview', views.checkview, name='checkview'),
+    path('send', views.send, name='send'),
+    path('getMessages/<str:room>/', views.getMessages, name='getMessages'),
 ]
