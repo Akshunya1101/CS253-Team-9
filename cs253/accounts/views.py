@@ -7,6 +7,7 @@ from django.views.generic import CreateView, ListView, DetailView
 from django.contrib.auth import authenticate, login, logout
 import math
 import json
+from django.contrib.auth.models import User
 from django.contrib import messages
 from accounts.models import Room, Message
 from django.http import HttpResponse, JsonResponse
@@ -14,7 +15,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 # Create your views here.
-from .models import Sell
+from .models import Sell, Seller, Customer, Order
 from .forms import CreateUserForm
 from math import ceil
 
@@ -64,13 +65,12 @@ def logoutUser(request):
 
 @login_required(login_url='accounts:login')
 def home(request):
-    products = Sell.objects.all()
+    products = Sell.objects.filter(seller=request.user)
     print(products)
     n = len(products)
     print(n)
-    nSlides = n//4
-    parameters = {"num_slides": nSlides,
-                  'product': products, 'range': range(n)}
+    nSlides= n
+    parameters={'no_of_slides':nSlides, 'range':range(1,nSlides), 'products': products}
     return render(request, 'accounts/dashboard.html', parameters)
 
 
@@ -88,7 +88,7 @@ def rent(request):
 
 class Sell_Create(CreateView):
     model = Sell
-    fields = "__all__"
+    fields = "__all__" 
     success_url = reverse_lazy('accounts:home')
 
 
