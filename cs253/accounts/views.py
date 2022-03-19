@@ -14,6 +14,7 @@ from django.utils.decorators import method_decorator
 # Create your views here.
 from .models import Sell
 from .forms import CreateUserForm
+from math import ceil
 
 def registerPage(request):
 	if request.user.is_authenticated:
@@ -66,6 +67,20 @@ def home(request):
 	nSlides = n//4
 	parameters = {"num_slides": nSlides, 'product': products, 'range': range(n)}
 	return render(request, 'accounts/dashboard.html', parameters)
+
+
+def searchMatch(query, item):
+	if(query in item.name or query in item.description):
+		return True
+	return False
+
+@login_required(login_url='accounts:login')
+def search(request):
+	query = request.GET['search']
+	products_temp = Sell.objects.all()
+	products = [item for item in products_temp if searchMatch(query, item)]
+	# products = Sell.objects.filter(title__icontains=query)
+	return render(request, 'accounts/search.html', {'products': products})
 
 @login_required(login_url='accounts:login')
 def buy(request):

@@ -11,6 +11,7 @@ urlpatterns = [
 	path('login/', views.loginPage, name="login"),  
 	path('logout/', views.logoutUser, name="logout"),
 	path('buy/',login_required(Sell_List.as_view()), name="buy"),
+	path('search/',views.search, name="search"),
 	path('sell/',login_required(Sell_Create.as_view()), name="sell"),
 	path('details/<int:pk>',login_required(Sell_Details.as_view()), name="item_details"),
 	path('rent/', views.rent, name="rent"), 

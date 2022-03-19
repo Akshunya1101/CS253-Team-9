@@ -7,7 +7,7 @@
 
     <div class="container">
         <div class="row">
-    {% for item in item_list %}
+    {% for item in products %}
                 <div class="card" style="width: 18rem; margin: 15px 30px; border: 5px solid black; background-color:#E0FFFF;">
                     <img class="card-img-top" src="{{item.photo.url}}" alt="Card image cap"
                     style="width: 100%; height: 20vw; object-fit: cover;">
@@ -21,14 +21,6 @@
                     </div>
                   </div>
     {% endfor %}
-    <div class="card" style="width: 18rem; margin: 15px 30px; border: 5px solid black;">
-        <div class="card-body">
-          <h1 class="card-title" style="color: green; font-size:45px;">You can also <b>SELL</b> on click of 1 button...</h1>
-        </div>
-        <div class="card-footer text-muted mx-auto" style="background-color: white;">
-            <a href="{% url 'accounts:sell' %}" class="btn btn-success">Sell Your Products</a>
-        </div>
-      </div>
                 </div>
             </div>
 {% endblock %}

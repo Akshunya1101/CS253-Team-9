@@ -1,23 +1,49 @@
 {% load static %}
-
-
 <style>
-  .hello-msg{
-    font-size: 18px;
-    color: #fff;
-    margin-right: 20px;
-  }
 </style>
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
- <img src="{% static 'images/logo.png' %}">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">IITKart</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'accounts:home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'accounts:buy' %}">Buy</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'accounts:sell' %}">Sell</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'accounts:rent' %}">Rent</a>
+        </li>
+
+      </ul>
+      {% comment %} <form class="d-flex" action='/search'>
+        <div class="input-group">
+          <input name='q' type="text" class="form-control" placeholder="Search" />
+          <button class="btn btn-outline-success" type="submit" id="button-addon2" style="margin: 0px 5px">Search</button>
+        </div> {% endcomment %}
+
+        <form class="d-flex" action='/search'>
+          <input name='search' class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="margin: 0px 5px">
+          <button class="btn btn-outline-success" type="submit" style="margin: 0px 5px">Search</button>
+        </form>
+        
+      </form>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link">Hello, {{request.user}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'accounts:logout' %}" style="color: red">Logout</a>
+        </li>
+      </ul>
+    </div>
   </div>
-
-  <span class="hello-msg">Hello, {{request.user}}</span>
-  <span ><a  class="hello-msg" href="{% url 'accounts:logout' %}">Logout</a></span>
-
+</nav>
 </nav>
