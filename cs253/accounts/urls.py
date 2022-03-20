@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import (Sell_Create,Sell_List,Sell_Details)
+from .views import (Sell_Create,Sell_List,Sell_Details,Sell_Delete, Sell_Update)
 from django.contrib.auth.decorators import login_required
 
 app_name = 'accounts'
@@ -20,4 +20,6 @@ urlpatterns = [
     path('enterRoom/checkview', views.checkview, name='checkview'),
     path('send', views.send, name='send'),
     path('getMessages/<str:room>/', views.getMessages, name='getMessages'),
+	path('delete/<int:pk>', Sell_Delete.as_view(), name='delete_item'),
+	path('update/<int:pk>', Sell_Update.as_view(), name='update_item'),
 ]

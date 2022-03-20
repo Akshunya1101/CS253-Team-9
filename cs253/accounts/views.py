@@ -3,9 +3,12 @@ from django.http import HttpResponse
 from django.forms import inlineformset_factory
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, DetailView
+from django.views.generic import CreateView, ListView, DetailView, DeleteView, UpdateView
 from django.contrib.auth import authenticate, login, logout
 import math
+from django.contrib import messages
+from django.db.models.signals import post_delete
+from django.contrib.messages.views import SuccessMessageMixin
 import json
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -156,3 +159,12 @@ def getMessages(request, room):
 
     messages = Message.objects.filter(room=room_details.id)
     return JsonResponse({"messages":list(messages.values())})
+
+class Sell_Delete(DeleteView):
+    model = Sell
+    success_url = reverse_lazy('accounts:home')
+
+class Sell_Update(UpdateView):
+    model = Sell
+    fields = "__all__"
+    success_url = reverse_lazy('accounts:home')

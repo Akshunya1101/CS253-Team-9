@@ -23,8 +23,11 @@
                   <h5 class="card-title">{{item.name}}</h5>
                   <p class="card-text"> Price: &#8377; {{item.price}} <br> {{item.description}}</p>
                 </div>
-                <div class="card-footer text-muted mx-auto" style="background-color: #E0FFFF;">
-                    <a href="#" class="btn btn-danger">Delete</a>
+                <div class="card-footer">      
+                  <div class="btn-wrapper text-center">
+                    <a class="btn btn-success" href="/update/{{item.id}}">Update</a> 
+                    <a class="btn btn-danger" href="/delete/{{item.id}}">Delete</a>
+                  </div>
                 </div>
               </div>
 {% endfor %}
