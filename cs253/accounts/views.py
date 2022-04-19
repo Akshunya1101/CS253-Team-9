@@ -101,7 +101,7 @@ def rent(request):
     context = {}
     return render(request, 'accounts/rent.html', context)
 
-
+@login_required(login_url='accounts:login')
 def Sell_Create(request):
     form = Sell_form(request.POST, request.FILES)
     u_list = User.objects.all()

@@ -20,6 +20,6 @@ urlpatterns = [
     path('enterRoom/checkview', views.checkview, name='checkview'),
     path('send', views.send, name='send'),
     path('getMessages/<str:room>/', views.getMessages, name='getMessages'),
-	path('delete/<int:pk>', Sell_Delete.as_view(), name='delete_item'),
-	path('update/<int:pk>', Sell_Update.as_view(), name='update_item'),
+	path('delete/<int:pk>',login_required(Sell_Delete.as_view()), name='delete_item'),
+	path('update/<int:pk>',login_required(Sell_Update.as_view()), name='update_item'),
 ]

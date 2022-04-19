@@ -22,7 +22,7 @@
   integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
   crossorigin="anonymous"
 ></script>
-<div style="margin: auto; height: 50%; width: 50%; padding: 10px">
+<div style="margin: auto; height: 50%; width: 50%; padding: 10px;">
   <h4>Add your product here:</h4>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
@@ -52,7 +52,7 @@
       />
     </div>
     <div class="form-group">
-      <label for="usr">Price</label>
+      <label for="usr">Price (in ₹)</label>
       <input type="number" class="form-control" id="price" name="price" />
     </div>
     <button type="submit" class="btn btn-primary" style="margin: 10px 0px">
