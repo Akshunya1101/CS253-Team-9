@@ -1,3 +1,4 @@
+from logging import exception
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.forms import inlineformset_factory
@@ -124,8 +125,13 @@ def enterRoom(request):
 
 @login_required(login_url='accounts:login')
 def room(request, room):
+    print(room)
     username = str(request.user)
-    room_details = Room.objects.get(name=room)
+    try:
+        room_details = Room.objects.get(name=room)
+    except:
+        room_details = None
+    print(room_details)
     return render(request, 'accounts/room.html', {
         'username': username,
         'room': room,
@@ -145,18 +151,26 @@ def checkview(request):
         new_room.save()
         return redirect('/'+room+'/?username='+username)
 
+@login_required(login_url='accounts:login')
 def send(request):
-    message = request.POST['message']
-    username = request.POST['username']
-    room_id = request.POST['room_id']
+    str=json.loads(request.body)
+    print(str)
+    message = str["message"]
+    username = str["username"]
+    room_id = str["room_id"]
 
     new_message = Message.objects.create(value=message, user=username, room=room_id)
     new_message.save()
     return HttpResponse('Message sent successfully')
 
+@login_required(login_url='accounts:login')
 def getMessages(request, room):
-    room_details = Room.objects.get(name=room)
-
+    print("abcd")
+    try:
+        room_details = Room.objects.get(name=room)
+    except Room.DoesNotExist:
+        room_details = None
+    print(room_details)
     messages = Message.objects.filter(room=room_details.id)
     return JsonResponse({"messages":list(messages.values())})
 
