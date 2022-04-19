@@ -8,13 +8,18 @@
     <div class="container">
         <div class="row">
     {% for item in item_list %}
-                <div class="card" style="width: 15rem; margin: 15px 15px; border: 5px solid black; border-radius: 8px;background-color:#E0FFFF;">
-                    <img class="card-img-top" src="{{item.photo.url}}" alt="Card image cap"
-                    style="width: 100%; height: 15vw; object-fit: cover;">
+                <div class="card" style="width: 15rem; margin: 15px 15px; border: 5px solid black; border-radius: 8px;background-color:#E0FFFF;"  onclick="location.href='/sell_detail/{{item.id}}'">
+                    <a href="/sell_detail/{{item.id}}"><img class="card-img-top" src="{{item.photo.url}}" alt="Card image cap"
+                        style="width: 230px; height: 220px">
                     <div class="card-body">
-                      <h5 class="card-title">{{item.name}}</h5>
-                      <p class="card-text"> Price: &#8377; {{item.price}} <br> {{item.description}}</p>
+                      <h5 class="card-title" style="color:black;">{{item.name}}</h5>
+                      <p class="card-text" style="color:black;"> Price: &#8377; {{item.price}}</p>
+                      <p class="card-text" style="color:black; text-overflow: ellipsis;
+                      overflow: hidden; 
+                      white-space: nowrap;">  {{item.description}}</p>
+                      <p class="card-text" style="color:black;"> Seller: {{item.seller}}</p>
                     </div>
+                    </a>
                     <div class="card-footer text-muted mx-auto" style="background-color: #E0FFFF;">
                         <a href="#" class="btn btn-primary" onclick="joinRoom('{{item.name}}','{{item.id}}')">Interested</a>
                     </div>
