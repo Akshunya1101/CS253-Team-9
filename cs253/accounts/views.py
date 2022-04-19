@@ -78,7 +78,7 @@ def home(request):
 
 
 def searchMatch(query, item):
-	if(query in item.name or query in item.description):
+	if(query.lower() in item.name.lower() or query.lower() in item.description.lower()):
 		return True
 	return False
 
