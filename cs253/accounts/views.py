@@ -111,6 +111,9 @@ def Sell_Create(request):
         photo = request.FILES['photo']
         price = request.POST['price']
         seller = request.user
+        if name=='' or description=='' or price=='' or seller=='':
+            messages.success(request,'Kindly fill all the fields.')
+            return render(request,'accounts/dashboard.html')
         Sell.objects.create(name=name, description=description, photo=photo, price=price, seller = seller)
         return redirect('accounts:home')
     return render(request, 'accounts/sell_form.html', {'form': form, 'u_list': u_list})
