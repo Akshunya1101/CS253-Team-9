@@ -19,7 +19,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 # Create your views here.
 from .models import Sell, Seller, Customer, Order
-from .forms import CreateUserForm
+from .forms import CreateUserForm, Sell_form
 from math import ceil
 
 def registerPage(request):
@@ -102,10 +102,18 @@ def rent(request):
     return render(request, 'accounts/rent.html', context)
 
 
-class Sell_Create(CreateView):
-    model = Sell
-    fields = "__all__" 
-    success_url = reverse_lazy('accounts:home')
+def Sell_Create(request):
+    form = Sell_form(request.POST, request.FILES)
+    u_list = User.objects.all()
+    if request.method == 'POST':
+        name = request.POST['name']
+        description = request.POST['description']
+        photo = request.FILES['photo']
+        price = request.POST['price']
+        seller = request.user
+        Sell.objects.create(name=name, description=description, photo=photo, price=price, seller = seller)
+        return redirect('accounts:home')
+    return render(request, 'accounts/sell_form.html', {'form': form, 'u_list': u_list})
 
 
 class Sell_List(ListView):
@@ -164,7 +172,14 @@ class Sell_Delete(DeleteView):
     model = Sell
     success_url = reverse_lazy('accounts:home')
 
+'''class Sell_Update(UpdateView):
+    model = Sell
+    fields = ['name', 'description', 'photo', 'price']
+    success_url = reverse_lazy('accounts:home')'''
+    
+
 class Sell_Update(UpdateView):
     model = Sell
-    fields = "__all__"
+    form_class = Sell_form
+    initial = {}
     success_url = reverse_lazy('accounts:home')
