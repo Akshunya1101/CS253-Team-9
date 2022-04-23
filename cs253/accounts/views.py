@@ -85,8 +85,8 @@ def searchMatch(query, item):
 @login_required(login_url='accounts:login')
 def search(request):
 	query = request.GET['search']
-	products_temp = Sell.objects.all()
-	products = [item for item in products_temp if searchMatch(query, item)]
+	products_temp = Sell.objects.all(); list = Sell.objects.filter(seller=request.user)
+	products = [item for item in products_temp if searchMatch(query, item) and item not in list]
 	# products = Sell.objects.filter(title__icontains=query)
 	return render(request, 'accounts/search.html', {'products': products})
 
@@ -122,6 +122,8 @@ def Sell_Create(request):
 class Sell_List(ListView):
     model = Sell
     context_object_name = 'item_list'
+    def get_queryset(self):
+        return Sell.objects.exclude(seller=self.request.user)
 
 
 class Sell_Details(DetailView):
