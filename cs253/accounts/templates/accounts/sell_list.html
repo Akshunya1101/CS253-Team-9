@@ -61,7 +61,7 @@
 
   function joinRoom(room, id) {
     const body = {
-      room_name: 'room'+id
+      room_name: 'Room '+id
     }
     console.log(body)
     fetch("http://127.0.0.1:8000/enterRoom/checkview", {
