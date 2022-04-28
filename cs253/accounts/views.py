@@ -18,11 +18,10 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 # Create your views here.
-from .models import Sell, Seller, Customer, Order
+from .models import Sell
 from .forms import CreateUserForm, Sell_form
-from math import ceil
 
-def registerPage(request):
+def registerPage(request): #This is used to redirect the user to register page so to register a new user
     if request.user.is_authenticated:
         return redirect('accounts:home')
     else:
@@ -40,7 +39,7 @@ def registerPage(request):
         return render(request, 'accounts/register.html', context)
 
 
-def loginPage(request):
+def loginPage(request): #This is used to redirect the user to login page
     if request.user.is_authenticated:
         return redirect('accounts:home')
     else:
@@ -60,20 +59,20 @@ def loginPage(request):
         return render(request, 'accounts/login.html', context)
 
 
-def logoutUser(request):
+def logoutUser(request): #To logout the user
     logout(request)
     return redirect('accounts:login')
 
 
 @login_required(login_url='accounts:login')
-def home(request):
+def home(request):   #This is used to redirect logged user to Home page
     products = Sell.objects.filter(seller=request.user)
     print(products)
     n = len(products)
     print(n)
     nSlides= n
     parameters={'no_of_slides':nSlides, 'range':range(1,nSlides), 'products': products}
-    return render(request, 'accounts/dashboard.html', parameters)
+    return render(request, 'accounts/home.html', parameters)
 
 
 
@@ -113,7 +112,7 @@ def Sell_Create(request):
         seller = request.user
         if name=='' or description=='' or price=='' or seller=='':
             messages.success(request,'Kindly fill all the fields.')
-            return render(request,'accounts/dashboard.html')
+            return render(request,'accounts/home.html')
         Sell.objects.create(name=name, description=description, photo=photo, price=price, seller = seller)
         return redirect('accounts:home')
     return render(request, 'accounts/sell_form.html', {'form': form, 'u_list': u_list})
