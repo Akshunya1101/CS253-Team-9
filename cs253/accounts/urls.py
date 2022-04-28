@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 app_name = 'accounts'
 
+#Urls for redrection to different web pages
 urlpatterns = [
     path('', views.home, name="home"),
 	path('register/', views.registerPage, name="register"),
@@ -14,7 +15,7 @@ urlpatterns = [
 	path('search/',views.search, name="search"),
 	path('sell/',views.Sell_Create, name="sell"),
 	path('sell_detail/<int:pk>',Sell_Details.as_view(), name="item_details"),
-	path('rent/', views.rent, name="rent"), 
+	# path('rent/', views.rent, name="rent"), 
 	path('enterRoom/', views.enterRoom, name="enterRoom"), 
 	path('<str:room>/', views.room, name='room'),
     path('enterRoom/checkview', views.checkview, name='checkview'),

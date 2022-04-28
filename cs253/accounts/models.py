@@ -45,9 +45,10 @@ class Sell(models.Model): #This model is used to define a product to be traded o
 #     def __str__(self):
 #         return self.product
 
-class Room(models.Model):
+class Room(models.Model): #This model is used to define a new chatroom
     name = models.CharField(max_length=1000,unique=True)
-class Message(models.Model):
+
+class Message(models.Model): #This model is used to maintain the chats of different users in different product chatboxes
     value = models.CharField(max_length=1000000)
     date = models.DateTimeField(default=datetime.now, blank=True)
     user = models.CharField(max_length=1000000)

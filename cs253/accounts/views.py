@@ -65,7 +65,7 @@ def logoutUser(request): #To logout the user
 
 
 @login_required(login_url='accounts:login')
-def home(request):   #This is used to redirect logged user to Home page
+def home(request):   #This is used to redirect logged in user to Home page and send the product list of items uploaded by that used to that page
     products = Sell.objects.filter(seller=request.user)
     print(products)
     n = len(products)
@@ -76,32 +76,27 @@ def home(request):   #This is used to redirect logged user to Home page
 
 
 
-def searchMatch(query, item):
+def searchMatch(query, item):  #Returns true if a product satisfies the search query and false otherwise
 	if(query.lower() in item.name.lower() or query.lower() in item.description.lower()):
 		return True
 	return False
 
 @login_required(login_url='accounts:login')
-def search(request):
+def search(request): #Algorithm to search for a product
 	query = request.GET['search']
 	products_temp = Sell.objects.all(); list = Sell.objects.filter(seller=request.user)
 	products = [item for item in products_temp if searchMatch(query, item) and item not in list]
 	# products = Sell.objects.filter(title__icontains=query)
 	return render(request, 'accounts/search.html', {'products': products})
 
-@login_required(login_url='accounts:login')
-def buy(request):
-    context = {}
-    return render(request, 'accounts/buy.html', context)
 
-
-@login_required(login_url='accounts:login')
-def rent(request):
-    context = {}
-    return render(request, 'accounts/rent.html', context)
+# @login_required(login_url='accounts:login')
+# def rent(request): #Function to send product list to rent page and then redirect to rent page
+#     context = {}
+#     return render(request, 'accounts/rent.html', context)
 
 @login_required(login_url='accounts:login')
-def Sell_Create(request):
+def Sell_Create(request): # Function to add a new product by taking input from the sell form page
     form = Sell_form(request.POST, request.FILES)
     u_list = User.objects.all()
     if request.method == 'POST':
@@ -118,24 +113,26 @@ def Sell_Create(request):
     return render(request, 'accounts/sell_form.html', {'form': form, 'u_list': u_list})
 
 
-class Sell_List(ListView):
+class Sell_List(ListView): #Class to send product list to buy page and then redirect to buy page
     model = Sell
     context_object_name = 'item_list'
     def get_queryset(self):
         return Sell.objects.exclude(seller=self.request.user)
 
 
-class Sell_Details(DetailView):
+class Sell_Details(DetailView): #Class to redirect to product details page
     model = Sell
 
 
+#All the below functions are used for chatroom functionality
+
 @login_required(login_url='accounts:login')
-def enterRoom(request):
+def enterRoom(request): #Function to redirect to the chatroom
     return render(request, 'accounts/enterRoom.html')
 
 
 @login_required(login_url='accounts:login')
-def room(request, room):
+def room(request, room): #Return details related to chatroom of a specific product
     username = str(request.user)
     room_details = Room.objects.get(name=room)
     return render(request, 'accounts/room.html', {
@@ -157,7 +154,7 @@ def checkview(request):
         new_room.save()
         return redirect('/'+room+'/?username='+username)
 
-def send(request):
+def send(request): #Function to make create new chat
     message = request.POST['message']
     username = request.POST['username']
     room_id = request.POST['room_id']
@@ -166,7 +163,7 @@ def send(request):
     new_message.save()
     return HttpResponse('Message sent successfully')
 
-def getMessages(request, room):
+def getMessages(request, room): #Functon to get older messages in that product chatbox
     room_details = Room.objects.get(name=room)
 
     messages = Message.objects.filter(room=room_details.id)
