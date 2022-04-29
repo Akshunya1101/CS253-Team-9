@@ -9,6 +9,12 @@ Project Summary
 The website requires the user to first register by making an account. After making an account and logging in, the user can sell some products, buy some products put up for sale by other users as well as rent them. They can search for products on the homepage. The prospective buyer and seller also have an option to chat using an inbuilt chatbox. All the products uploaded by the user shall be shown on the homepage and the seller has an option to update details of the items uploaded.
 
 ---
+Dependencies
+---
+All the dependencies can be found in requirements.txt file.
+---
+
+---
 Running the code
 ---
 For getting this project setup, you can clone the repository to create a local copy on your system
