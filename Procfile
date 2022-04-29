@@ -1,1 +1,0 @@
-web: gunicorn cs253.crm1.wsgi --log-file -
